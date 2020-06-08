@@ -1,0 +1,46 @@
+{
+  "projectID": "plugin-codebase",
+  "version": "0.1",
+  "mode": "develop",
+  "textdomain": "plugin-codebase",
+  "assets": {
+    "css": [
+      {
+        "name": "styles",
+        "path": "assets/css/style.css"
+      }
+    ],
+    "js": [
+      {
+        "name": "ui-js",
+        "path": "assets/js/ui.js"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "name": "Settings",
+      "menu": "Settings",
+      "slug": "plugin-codebase-settings",
+      "caps": "manage_options",
+      "view": "settings/settings",
+      "load": "DataController:first",
+      "icon": "dashicons-schedule",
+      "position": 3
+    },
+    {
+      "name": "Settings 1",
+      "menu": "Settings 2",
+      "slug": "settings3",
+      "caps": "manage_options",
+      "view": "settings/settings",
+      "parent_slug": "plugin-codebase-settings"
+    }
+  ],
+  "api": [
+    {
+      "action": "options_save",
+      "handler": "ApiController:first"
+    }
+  ]
+}
