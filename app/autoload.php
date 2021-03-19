@@ -1,4 +1,4 @@
-<?php
+<?php namespace PuzzleCodebase;
 
 function loadFiles($dir, $excl = []) {
     $files = scandir($dir);
@@ -20,5 +20,5 @@ function loadFiles($dir, $excl = []) {
     }
 }
 
-loadFiles(__DIR__, ['views']);
+loadFiles(__DIR__, ['views', 'config.php']);
 
