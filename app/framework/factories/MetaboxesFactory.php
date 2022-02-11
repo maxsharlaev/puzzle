@@ -1,6 +1,6 @@
-<?php namespace PuzzleCodebase\Factories;
+<?php
 
-use PuzzleCodebase\Models\Metabox;
+namespace PuzzleCodebase\Puzzle;
 
 class MetaboxesFactory {
     static function bake($page)

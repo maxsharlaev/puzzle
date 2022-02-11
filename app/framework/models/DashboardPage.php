@@ -1,6 +1,6 @@
-<?php namespace PuzzleCodebase\Models;
+<?php
 
-use function PuzzleCodebase\Helpers\_t;
+namespace PuzzleCodebase\Puzzle;
 
 class DashboardPage {
     private $page = null;

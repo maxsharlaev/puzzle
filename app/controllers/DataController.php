@@ -1,4 +1,6 @@
-<?php namespace PuzzleCodebase;
+<?php
+
+namespace PuzzleCodebase\Puzzle;
 
 class DataController
 {
@@ -23,7 +25,7 @@ class DataController
     }
     function courseMetaboxDataGet()
     {
-        $post_id = Application::inst()->getCurrentAdminPage();
+        $post_id = Application::get_instance()->getCurrentAdminPage();
         $courseEnabled = get_post_meta($post_id, 'is_course_page', true);
         $courseTotalTime = get_post_meta($post_id, 'course_total_time', true);
         $course_term = get_post_meta($post_id, 'course_term', true);
@@ -50,9 +52,12 @@ class DataController
 
     function settingsLoad()
     {
-
+        return [];
     }
 
+    function settingsSub() {
+        return [];
+    }
     function pdfDataLoad()
     {
     }

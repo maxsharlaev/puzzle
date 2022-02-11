@@ -1,43 +1,73 @@
 # Puzzle WP Plugin framework
-The framework provides basic routines that simplifies plugin development. It uses **config.php** file to define all
+The framework provides basic routines that simplifies plugin development. It uses **app/config.php** file to define all
 basic methods, configuration and assets. 
 
 **Key features:**
-- Assets inclusion
+- Quick and easy assets include
 - Shortcodes API support
 - Admin pages
 - Metaboxes
 - AJAX-based API
 - REST API
+- Custom posts and taxonomies support ``(upcoming)``
 
 ## Installation
 
-What should be done for new project installation:
+1. Copy the plugin folder to your staging
+2. Do a basic setup (see next chapter)
+3. Configure the plugin (saves lots of dev time)
+4. Ready for coding!
 
-**1. Namespace change**
+##Setup
+What should be done for a new project launch:
 
-Namespace should be changed for all files from the default **PuzzleCodebase** to a custom one.
+####1. Namespace, files, constants change
 
-**2. Basic configuration**
+* Namespace should be changed for all files from the default ``PuzzleCodebase`` to a custom one.
+* ``plugin-codebase.php`` - customize file name and plugin metadata to comply your project settings (plugin title, author, etc)
 
-Following properties should be set to custom ones:
+####2. Basic configuration
+
+Following properties from the ``app/config.php`` should be set to custom ones:
 * ``projectID`` - project identifier
 * ``version`` - plugin version
 * ``textdomain`` - a string for i18n
 
-**3. Advanced configuration**
+####3. Advanced configuration
 
-Any other **config.php** modifications according to plugin purposes
+Any other **app/config.php** modifications according to plugin purposes
 
-**4. Methods and models**
+####4. Methods and models
 
 Codebase modifications according to required methods and entities
 
-## Config params
+## Plugin structure
+
+.
+├── app
+    ├── controllers
+    ├── framework
+    ├── views
+    ├── autoload.php
+    ├── config.php
+├── .gitignore
+├── plugin-codebase.php
+├── readme.md
+
+* `./app` - plugin code lives here
+* `./app/controllers` - basically the code you should change
+* `./app/framework` - framework files. Not to be changed unless you really want to
+* `./app/views` - plugin templates
+* `./assets` - where all the assets lie
+* `.gitignore` - gitignore file
+* `plugin-codebase.php` - base plugin file
+* `readme.md` - this file (the docs)
+
+# Config params
 
 Params for **config.php** and project configuration:
 
-### projectID ``string``
+## projectID ``string``
 
 ID of the project. Can be used in various places. For example, in asset ids.
 
@@ -45,7 +75,7 @@ ID of the project. Can be used in various places. For example, in asset ids.
 
 `'projectId' => 'puzzle-codebase'`
 
-### version ``string``
+##version ``string``
 
 Version of the plugin. Used primarily for assets    
 
@@ -53,20 +83,20 @@ Version of the plugin. Used primarily for assets
 
 `'version' => '1.0.2b'`
 
-### mode ``string``
+## mode ``string``
 
 Plugin work mode. Used for development purposes, for example    
 
 **Values list**
 
-* ``develop`` - the plugin is in development mode. All assets have version equal to current timestamp
-* ``production`` - the plugin is in production mode. All assets have version equal to ``version``  parameter value
+* ``develop`` - the plugin is in a development mode. All assets have version equal to current timestamp
+* ``production`` - the plugin is in a production mode. All assets have version equal to ``version``  parameter value
 
 **Example:**
 
 `'mode' => 'develop'`
 
-### textdomain ``string``
+##textdomain ``string``
 
 ID string for i18n. Used in translatable strings (``_t()`` function)
 
@@ -74,7 +104,7 @@ ID string for i18n. Used in translatable strings (``_t()`` function)
 
 `'textdomain' => 'puzzle-codebase'`
 
-### assets ``array``
+## assets ``array``
 
 Assets for plugin, CSS and JS. This item contains four sections:
 
@@ -86,7 +116,7 @@ Assets for plugin, CSS and JS. This item contains four sections:
 **Example:**
 
 ```
-    [ 'assets' => [
+    'assets' => [
         'css'=> [
             [
                 'name'=> 'styles',
@@ -115,7 +145,6 @@ Assets for plugin, CSS and JS. This item contains four sections:
                 'object_data'=> 'ApiController:uiJsData'
             ],
         ]
-    ]
 ```
 
 Parameters for ```css``` and ``css-dash``:
@@ -128,22 +157,22 @@ Parameters for **js** and **js-dash**:
 * ``object`` - object name for localization and data provided from back-end
 * ``object_data`` - a reference to the function preparing data for object (localization or any other data) 
  
-### shortcodes ``array``
+## shortcodes ``array``
 
 Array defining shortcodes plugin uses
 
 **Example:**
 ```
-"shortcodes"=> [
-    "shortcode_sample"=> [
-        "attributes"=> [
-            "id"=> null,
-            "title"=> ""
+'shortcodes'=> [
+    'shortcode_sample' => [
+        'attributes' => [
+            'id' => null,
+            'title' => ''
         ],
-        "load"=> "DataController:dataLoaded",
-        "view"=> "shortcodes/showData"
+        'load'=> "DataController:dataLoaded",
+        'view' => "shortcodes/showData"
     ]
-        ],
+],
 ```
 
 **Parameters:**
@@ -152,7 +181,7 @@ Array defining shortcodes plugin uses
 * ``load`` - a reference to data loader function
 * ``view`` - a reference for shortcode display template
 
-### middleware ``array``
+## middleware ``array``
 
 Hooks for any action plugin uses.
 
@@ -175,7 +204,7 @@ Hooks for any action plugin uses.
 * ``load`` - a reference to data loader function
 * ``view`` - a reference to template middleware could use
 
-### pages ``array``
+## pages ``array``
 
 Plugin settings pages
 
@@ -215,7 +244,7 @@ Parameters:
 * ``position`` - position in dashboard menu
 * ``parent_slug`` - for child menus. Parent menu slug
 
-### metaboxes ``array``
+## metaboxes ``array``
 
 Metaboxes list the plugin should create.
 
@@ -249,7 +278,7 @@ Parameters:
 * ``save`` - save function reference
 * ``save_data`` - data that should be collected from ``$_POST`` in save function
             
-### api ``array``
+## api ``array``
 
 AJAX methods the plugin uses
 
@@ -269,7 +298,7 @@ AJAX methods the plugin uses
 * ``auth`` - boolean type. ``true`` means the action is only accessible for registered users. ``false`` means it is also available for guests
 * ``handler`` - a function that handles requests
 
-### rest ``array``
+## rest ``array``
 
 REST API functons list
 
@@ -305,6 +334,8 @@ REST API functons list
 
 Callables are references to classes and their methods that do some actions: loading data, handling WP actions, etc
 
+Callables are used for defining handlers for events, apis, etc
+
 All callables uses the same format: 
 
 ```
@@ -319,12 +350,12 @@ If ``Namespace`` part is not specified, default (main plugin) namespace is used.
 So if you have ``PuzzleCodebase`` as the default namespace and used ``DataController:loadData`` as callable, the framework will try to call
 ``PuzzleCodebase\DataController->loadData()`` as result 
 
-In a specified namespace macro ``%NAMESPACE%`` can be used. It will be replaced with the default plugin namespace. So you can specify ``%NAMESPACE%\Controllers``
-and it will be translated to ``PuzzleCodebase\Cntrolers`` if ``PuzzleCodebase`` is the default namespace
+In a specified namespace macro ``__NAMESPACE__`` can be used. It will be replaced with the default plugin namespace. So you can specify ``%NAMESPACE%\Controllers``
+and it will be translated to ``PuzzleCodebase\Controlers`` if ``PuzzleCodebase`` is the default namespace
 
 ## Data API
 
-There are a lot ``'load'`` keys in config array. Each value defines a callable handles specific part of your plugin.
+There are a lot of ``'load'`` keys in the config array. Each value defines a callable which handles specific part of your plugin.
 
 Each callable should return a ``key => value`` array. The framework then uses ``extract()`` function, so all items returned in data array can be used as  ``$key`` variable.
 

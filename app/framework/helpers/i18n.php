@@ -1,6 +1,8 @@
-<?php namespace PuzzleCodebase\Helpers;
+<?php
 
-use PuzzleCodebase\Application;
+namespace PuzzleCodebase\Puzzle;
+
+use PuzzleCodebase\Puzzle;
 
 function _t($string) {
     $textdomain = Application::dataGet('textdomain');

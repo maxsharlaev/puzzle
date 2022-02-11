@@ -1,4 +1,7 @@
-<?php namespace PuzzleCodebase;
+<?php
+
+namespace PuzzleCodebase;
+
  /**
  * Plugin Name: Puzzle Codebase
  * Author: Mechanical Pie Apps
@@ -6,14 +9,11 @@
  * Text Domain: puzzle-codebase
  */
 
-use PuzzleCodebase\Framework\Controllers\Application;
+use PuzzleCodebase\Puzzle\Application;
 
 require_once('app/autoload.php');
 
-define(__NAMESPACE__.'_PLUGIN_DIR', __DIR__);
-define(__NAMESPACE__.'_PLUGIN_URL', plugin_dir_url(__FILE__));
+Application::get_instance();
 
-Application::inst();
-
-register_activation_hook( __FILE__, [Application::inst(), 'pluginActivated']);
-register_deactivation_hook( __FILE__, [Application::inst(), 'pluginDeactivated']);
+register_activation_hook( __FILE__, [Application::get_instance(), 'pluginActivated']);
+register_deactivation_hook( __FILE__, [Application::get_instance(), 'pluginDeactivated']);

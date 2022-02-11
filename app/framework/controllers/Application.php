@@ -1,9 +1,6 @@
-<?php namespace PuzzleCodebase\Framework\Controllers;
+<?php
 
-use PuzzleCodebase\Factories\MetaboxesFactory;
-use PuzzleCodebase\Factories\DashboardPagesFactory;
-use PuzzleCodebase\Factories\ShortcodesFactory;
-use PuzzleCodebase\Controllers;
+namespace PuzzleCodebase\Puzzle;
 
 use WP_Post;
 
@@ -12,9 +9,12 @@ use WP_Post;
  */
 class Application
 {
-    private static $instance = null;
+    use Singleton;
+
+    public $directory;
+    public $url;
+
     private static $data = [];
-    private static $url = null;
 
     private $currentPage = null;
     private $currentTerm = null;
@@ -23,28 +23,16 @@ class Application
 
     function __construct()
     {
+        $this->directory = str_replace('/app/framework/controllers', '', __DIR__);
+        $this->url = plugin_dir_url(__FILE__);
         $plugin_data = require_once(__DIR__ . '/../../config.php');
         self::$data = $plugin_data;
-
-        self::$url = constant(__NAMESPACE__ . '_PLUGIN_URL');
 
         add_action('init', [$this, 'init']);
         add_action('template_redirect', [$this, 'initPages']);
 
         $this->shortcodes();
         $this->middleware();
-    }
-
-    /**
-     * Inits singleton class or returns existing instance
-     * @return Application
-     */
-    static function inst()
-    {
-        if (self::$instance == null) {
-            self::$instance = new self;
-        }
-        return self::$instance;
     }
 
     /**
@@ -67,7 +55,7 @@ class Application
      * @param array $args
      * @return mixed
      */
-    static function call(mixed $func, array $args = [])
+    static function call($func, array $args = [])
     {
         if (is_callable($func)) {
             return $func($args);
@@ -89,7 +77,7 @@ class Application
     {
         $call = explode(':', $function);
         if (strpos($call[0], '\\')) {
-            $call[0] = str_replace('%NAMESPACE%', __NAMESPACE__, $call[0]);
+            //$call[0] = str_replace('%NAMESPACE%', __NAMESPACE__, $call[0]);
         } else {
             $call[0] = '\\' . __NAMESPACE__ . '\\' . $call[0];
         }
@@ -165,13 +153,13 @@ class Application
             $scripts = $data['assets']['js'];
             foreach ($styles as $style) {
                 wp_enqueue_style(
-                    $data['projectId'].'_'.$style['name'], self::$url . $style['path'], $style['deps'] ?? [],
+                    $data['projectId'].'_'.$style['name'], $this->url . $style['path'], $style['deps'] ?? [],
                     (WP_DEBUG || $data['mode'] == 'develop') ? time() : (self::$data['version'] ?? false)
                 );
             }
             foreach ($scripts as $script) {
                 wp_enqueue_script(
-                    $data['projectId'].'_'.$script['name'], self::$url . $script['path'], $script['deps'] ?? [],
+                    $data['projectId'].'_'.$script['name'], $this->url . $script['path'], $script['deps'] ?? [],
                     WP_DEBUG ? time() : (self::$data['version'] ?? false)
                 );
                 if ($script['object']) {
@@ -191,13 +179,13 @@ class Application
             $scripts = $data['assets']['js-dash'];
             foreach ($styles as $style) {
                 wp_enqueue_style(
-                    $data['projectId'].'_'.$style['name'], self::$url . $style['path'], $style['deps'] ?? [],
+                    $data['projectId'].'_'.$style['name'], $this->url . $style['path'], $style['deps'] ?? [],
                     WP_DEBUG ? time() : (self::$data['version'] ?? false)
                 );
             }
             foreach ($scripts as $script) {
                 wp_enqueue_script(
-                    $data['projectId'].'_'.$script['name'], self::$url . $script['path'], $script['deps'] ?? [],
+                    $data['projectId'].'_'.$script['name'], $this->url . $script['path'], $script['deps'] ?? [],
                     WP_DEBUG ? time() : (self::$data['version'] ?? false)
                 );
                 if ($script['object']) {
@@ -309,7 +297,7 @@ class Application
      */
     public function getCurrentAdminPage()
     {
-        return $this->currentPageAdmin->ID;
+        return $this->currentPageAdmin->ID ?? null;
     }
 
     /**

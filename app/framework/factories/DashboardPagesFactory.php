@@ -1,6 +1,6 @@
-<?php namespace PuzzleCodebase\Factories;
+<?php
 
-use PuzzleCodebase\Models\DashboardPage;
+namespace PuzzleCodebase\Puzzle;
 
 class DashboardPagesFactory
 {

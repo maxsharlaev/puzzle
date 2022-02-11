@@ -1,8 +1,6 @@
-<?php namespace PuzzleCodebase\Models;
+<?php
 
-use PuzzleCodebase\Helpers;
-use PuzzleCodebase\Application;
-use function PuzzleCodebase\Helpers\_t;
+namespace PuzzleCodebase\Puzzle;
 
 class Metabox {
 

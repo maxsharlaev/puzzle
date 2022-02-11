@@ -1,6 +1,8 @@
-<?php namespace PuzzleCodebase\Factories;
+<?php
 
-use PuzzleCodebase\Models\Shortcode;
+namespace PuzzleCodebase\Puzzle;
+
+use PuzzleCodebase\Puzzle;
 
 class ShortcodesFactory {
     private $data = null;

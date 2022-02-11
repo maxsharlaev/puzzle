@@ -1,5 +1,7 @@
 <?php namespace PuzzleCodebase;
 
+// ToDo: rewrite autoloader
+
 function loadFiles($dir, $excl = []) {
     $files = scandir($dir);
     foreach( $files as $file ) {
@@ -15,10 +17,10 @@ function loadFiles($dir, $excl = []) {
         if (end($slugs) != 'php') {
             continue;
         }
-
         require_once($dir.'/'.$file);
     }
 }
 
+loadFiles(__DIR__.'/framework/traits');
 loadFiles(__DIR__, ['views', 'config.php']);
 

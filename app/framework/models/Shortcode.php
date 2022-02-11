@@ -1,4 +1,6 @@
-<?php namespace PuzzleCodebase\Models;
+<?php
+
+namespace PuzzleCodebase\Puzzle;
 
 class Shortcode {
     private $base = 'shortcodes';

@@ -1,10 +1,12 @@
-<?php namespace PuzzleCodebase;
+<?php
+
+namespace PuzzleCodebase\Puzzle;
 
 class ApiController
 {
     function uiJsData()
     {
-        $currentPage = Application::inst()->getCurrentPage();
+        $currentPage = Application::get_instance()->getCurrentPage();
         return [
             'ajax_url' => admin_url('admin-ajax.php'),
             'page_id' => $currentPage,

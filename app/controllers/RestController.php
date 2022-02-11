@@ -1,4 +1,6 @@
-<?php namespace PuzzleCodebase\Controllers;
+<?php
+
+namespace PuzzleCodebase\Puzzle;
 
 class RestController {
     function test() {

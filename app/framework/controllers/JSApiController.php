@@ -1,6 +1,8 @@
-<?php namespace PuzzleCodebase\Controllers;
+<?php
 
-class SystemApiController
+namespace PuzzleCodebase\Puzzle;
+
+class JSApiController
 {
     function jsData()
     {
@@ -9,9 +11,9 @@ class SystemApiController
             'auth' => is_user_logged_in(),
             'user_id' => get_current_user_id()
         ];
-        $currentPage = Application::inst()->getCurrentPage();
-        $termPage = Application::inst()->getCurrentTerm();
-        $adminPage = Application::inst()->getCurrentAdminPage();
+        $currentPage = Application::get_instance()->getCurrentPage();
+        $termPage = Application::get_instance()->getCurrentTerm();
+        $adminPage = Application::get_instance()->getCurrentAdminPage();
         if ($currentPage) {
             $data['page_id'] = $currentPage;
         }
