@@ -28,7 +28,7 @@ class DashboardPage {
         $data = $this->dataLoad($this->page);
         $app = Application::dataGet();
         extract($data);
-        $viewName =  __DIR__.'/../views/'.$this->page['view'].'.php';
+        $viewName =  __DIR__.'/../../views/'.$this->page['view'].'.php';
         ob_start();
         if (file_exists($viewName)) {
             include( $viewName );
