@@ -24,7 +24,11 @@ class Application
     function __construct()
     {
         $this->directory = str_replace('/app/framework/controllers', '', __DIR__);
-        $this->url = plugin_dir_url(__FILE__);
+
+        $parts_plugin_name = plugin_basename(__FILE__);
+        [$plugin_name_folder] = explode('/', $parts_plugin_name);
+        $this->url = plugins_url().'/'.$plugin_name_folder.'/';
+
         $plugin_data = require_once(__DIR__ . '/../../config.php');
         self::$data = $plugin_data;
 
