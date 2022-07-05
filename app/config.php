@@ -59,7 +59,9 @@ namespace PuzzleCodebase;
              *      [
              *          'controller'=> 'PDFController:make',
              *          'load'=> 'DataController:pdfDataLoad',
-             *          'view'=> 'pdf/firstReport'
+             *          'view'=> 'pdf/firstReport',
+             *          'priority' => 10,
+             *          'accepted_args' => 4
              *      ],
              *  ],
              */

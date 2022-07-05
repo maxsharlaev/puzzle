@@ -108,8 +108,10 @@ class Application
         $middleware = self::$data['middleware'];
         foreach ($middleware as $key => $section) {
             foreach ($section as $object) {
+                $priority = $object['priority'] ?? 10;
+                $accepted_args = $object['accepted_args'] ?? 4;
                 $middlewareItem = new MiddlewareController($object);
-                add_action($key, [$middlewareItem, 'launch']);
+                add_action($key, [$middlewareItem, 'launch'], $priority, $accepted_args);
             }
         }
     }

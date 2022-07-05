@@ -12,10 +12,10 @@ class MiddlewareController {
 
     function launch() {
         $data = [];
-        if ($this->data['load']) {
+        if ($this->data['load'] ?? false) {
             $data = Application::call($this->data['load'], $this->data);
         }
-
-        Application::call($this->data['controller'], ['model' => $this->data, 'data' => $data]);
+        $args = func_get_args();
+        return Application::call($this->data['controller'], ['model' => $this->data, 'data' => $data, 'args' => $args]);
     }
 }
